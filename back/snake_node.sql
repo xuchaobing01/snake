@@ -10,7 +10,7 @@ CREATE TABLE `snake_node` (
   `typeid` int(11) NOT NULL COMMENT '父级节点id',
   `style` varchar(155) DEFAULT '' COMMENT '菜单样式',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('1','用户管理','#','#','#','2','0','fa fa-users');
 insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('2','用户列表','admin','user','index','2','1','');
@@ -26,4 +26,7 @@ insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_n
 insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('12','数据备份/还原','admin','data','index','2','11','');
 insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('13','备份数据','admin','data','importdata','1','12','');
 insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('14','还原数据','admin','data','backdata','1','12','');
-insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('15','权限列表','admin','Auth','index','2','1','');
+insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('15','权限列表','admin','auth','index','2','1','');
+insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('16','添加节点','admin','auth','authadd','1','15','');
+insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('17','编辑节点','admin','auth','authedit','1','15','');
+insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('18','删除节点','admin','auth','authdel','1','15','');

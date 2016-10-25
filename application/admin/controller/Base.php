@@ -21,8 +21,10 @@ class Base extends Controller
         $this->error('方法不存在');
 
     }
+
     public function _initialize()
     {
+
         $username = session('username');
         if (empty($username)) {
 
@@ -31,7 +33,7 @@ class Base extends Controller
 
         //检测权限
         $control = lcfirst(request()->controller());
-        $action = lcfirst(request()->action());
+        $action  = lcfirst(request()->action());
 
         //跳过登录系列的检测以及主页权限
         if (!in_array($control, ['login', 'index'])) {
@@ -46,7 +48,7 @@ class Base extends Controller
 
         $this->assign([
             'username' => session('username'),
-            'menu' => $node->getMenu(session('rule')),
+            'menu'     => $node->getMenu(session('rule')),
             'rolename' => session('role'),
         ]);
 

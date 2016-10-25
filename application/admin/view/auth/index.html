@@ -47,10 +47,8 @@
         </div>
         <div class="ibox-content">
             <div class="form-group clearfix col-sm-1" >
-                <a href="./roleAdd"><button class="btn btn-primary" type="button" ><i class="fa fa-plus"></i>&nbsp;添加节点</button></a>
+                <a href="./authAdd"><button class="btn btn-primary" type="button" ><i class="fa fa-plus"></i>&nbsp;添加节点</button></a>
             </div>
-            
-            <div class="hr-line-dashed"></div>
 
             <div class="example-wrap">
                 <div class="example">
@@ -137,7 +135,7 @@
     function authDel(id){
         layer.confirm('确认删除此角色?', {icon: 3, title:'提示'}, function(index){
             //do something
-            $.getJSON('./roleDel', {'id' : id}, function(res){
+            $.getJSON('./authDel', {'id' : id}, function(res){
                 if(res.code == 1){
                     layer.alert('删除成功', function(){
                         initTable();
