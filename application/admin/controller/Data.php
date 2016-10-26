@@ -17,24 +17,24 @@ class Data extends Base
     {
 
         $tables = db()->query('show tables');
-        foreach($tables as $key=>$vo){
-            $sql = "select count(0) as alls from ".$vo['Tables_in_snake'];
+        foreach ($tables as $key => $vo) {
+            $sql = "select count(0) as alls from " . $vo['Tables_in_snake'];
             $tables[$key]['alls'] = db()->query($sql)['0']['alls'];
 
             $operate = [
-                '备份' => "javascript:importData('".$vo['Tables_in_snake']."', ".$tables[$key]['alls'].")",
-                '还原' => "javascript:backData('".$vo['Tables_in_snake']."')"
+                '备份' => "javascript:importData('" . $vo['Tables_in_snake'] . "', " . $tables[$key]['alls'] . ")",
+                '还原' => "javascript:backData('" . $vo['Tables_in_snake'] . "')",
             ];
             $tables[$key]['operate'] = showOperate($operate);
-            if(file_exists(config('back_path') . $vo['Tables_in_snake'] . ".sql")){
+            if (file_exists(config('back_path') . $vo['Tables_in_snake'] . ".sql")) {
                 $tables[$key]['ctime'] = date('Y-m-d H:i:s', filemtime(config('back_path') . $vo['Tables_in_snake'] . ".sql"));
-            }else{
+            } else {
                 $tables[$key]['ctime'] = '无';
             }
 
         }
         $this->assign([
-           'tables' => $tables
+            'tables' => $tables,
         ]);
 
         return $this->fetch();
@@ -53,7 +53,7 @@ class Data extends Base
         $sqlStr .= "\r\n";
 
         $result = db()->query('select * from ' . $table);
-        foreach($result as $key=>$vo){
+        foreach ($result as $key => $vo) {
             $keys = array_keys($vo);
             $keys = array_map('addslashes', $keys);
             $keys = join('`,`', $keys);
@@ -79,12 +79,12 @@ class Data extends Base
         set_time_limit(0);
         $table = input('param.table');
 
-        if(!file_exists(config('back_path') . $table . ".sql")){
+        if (!file_exists(config('back_path') . $table . ".sql")) {
             return json(['code' => -1, 'data' => '', 'msg' => '备份数据不存在!']);
         }
 
         $sqls = analysisSql(config('back_path') . $table . ".sql");
-        foreach($sqls as $key=>$sql){
+        foreach ($sqls as $key => $sql) {
             db()->query($sql);
         }
         return json(['code' => 1, 'data' => '', 'msg' => 'success']);
