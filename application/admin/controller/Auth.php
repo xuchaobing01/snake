@@ -15,7 +15,7 @@ use app\admin\model\UserType;
 
 class Auth extends Base
 {
-    //权限列表
+    //节点列表
     public function index()
     {
 
@@ -66,52 +66,79 @@ class Auth extends Base
 
     }
 
-    //添加权限
+    //添加节点
     public function authAdd()
     {
+        //提交表单
         if (request()->isPost()) {
 
             $param = input('param.');
+
             $param = parseParams($param['data']);
 
-            $role = new UserType();
-            $flag = $role->insertRole($param);
+            $node = new Node();
+
+            $flag = $node->insertNode($param);
 
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            die();
         }
+
+        $node = new Node();
+        $selectResult = $node->getTree();
+
+        $type = config('authtype');
+
+        foreach ($selectResult as $key => $vo) {
+
+            $selectResult[$key]['node_name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $vo['lev']) . ($vo['lev'] > 0 ? '└----' : '') . $vo['node_name'];
+        }
+
+        $this->assign([
+            'auth' => $selectResult,
+            'authtype' => $type,
+        ]);
 
         return $this->fetch();
     }
 
-    //编辑权限
+    //编辑节点
     public function authEdit()
     {
-        $role = new UserType();
+        $node = new Node();
 
         if (request()->isPost()) {
 
             $param = input('post.');
             $param = parseParams($param['data']);
 
-            $flag = $role->editRole($param);
+            $flag = $node->editNode($param);
 
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            die();
+        }
+
+        $selectResult = $node->getTree();
+        foreach ($selectResult as $key => $vo) {
+            $selectResult[$key]['node_name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $vo['lev']) . ($vo['lev'] > 0 ? '└----' : '') . $vo['node_name'];
         }
 
         $id = input('param.id');
         $this->assign([
-            'role' => $role->getOneRole($id),
+            'node' => $node->getOneNode($id),
+            'authtype' => config('authtype'),
+            'auth' => $selectResult,
         ]);
         return $this->fetch();
     }
 
-    //删除权限
+    //删除节点
     public function authDel()
     {
         $id = input('param.id');
 
-        $role = new UserType();
-        $flag = $role->delRole($id);
+        $node = new Node();
+        $flag = $node->delNode($id);
         return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
     }
 

@@ -68,7 +68,7 @@ class Node extends Model
     public function getTree($parent_id = 0, $lev = 0)
     {
         $tree = array();
-        $cats = db('node')->select();
+        $cats = $this->order('id asc')->select();
 
         foreach ($cats as $c) {
             if ($c['typeid'] == $parent_id) {
@@ -88,6 +88,81 @@ class Node extends Model
     public function getAllNodes()
     {
         return $this->count();
+    }
+
+    /**
+     * 根据节点id获取节点信息
+     * @param $id
+     */
+    public function getOneNode($id)
+    {
+        return $this->where('id', $id)->find();
+    }
+
+    public function insertNode($param)
+    {
+        try {
+
+            $rs = $this->validate('NodeValidate')->save($param);
+
+            if (false === $rs) {
+
+                return ['code' => -1, 'data' => '', 'msg' => $this->getError()];
+
+            } else {
+
+                return ['code' => 1, 'data' => '', 'msg' => '添加节点成功'];
+
+            }
+
+        } catch (PDOException $e) {
+
+            return ['code' => -2, 'data' => '', 'msg' => $e->getMssage()];
+
+        }
+    }
+
+    /**
+     * 编辑角色信息
+     * @param $param
+     */
+    public function editNode($param)
+    {
+        try {
+
+            $result = $this->validate('NodeValidate')->save($param, ['id' => $param['id']]);
+
+            if (false === $result) {
+                // 验证失败 输出错误信息
+                return ['code' => 0, 'data' => '', 'msg' => $this->getError()];
+            } else {
+
+                return ['code' => 1, 'data' => '', 'msg' => '编辑角色成功'];
+            }
+        } catch (PDOException $e) {
+            return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * [delNode 删除节点]
+     *
+     * @author xuchaobing
+     *
+     * @date   2016-10-26
+     *
+     * @param  [int]     $id [节点id]
+     *
+     * @return [array]   [删除节点结果的数组]
+     */
+    public function delNode($id)
+    {
+        try {
+            $this->where('id', $id)->delete($id);
+            return ['code' => 1, 'data' => '', 'msg' => '删除节点成功'];
+        } catch (PDOException $e) {
+            return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
+        }
     }
 
 }

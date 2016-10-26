@@ -10,7 +10,7 @@ CREATE TABLE `snake_node` (
   `typeid` int(11) NOT NULL COMMENT '父级节点id',
   `style` varchar(155) DEFAULT '' COMMENT '菜单样式',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('1','用户管理','#','#','#','2','0','fa fa-users');
 insert into `snake_node`(`id`,`node_name`,`module_name`,`control_name`,`action_name`,`is_menu`,`typeid`,`style`) values('2','用户列表','admin','user','index','2','1','');

@@ -38,7 +38,63 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">节点名称：</label>
                             <div class="input-group col-sm-4">
-                                <input id="rolename" type="text" class="form-control" name="rolename" required="" aria-required="true">
+                                <input id="rolename" type="text" class="form-control" name="node_name" required="" aria-required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">父节点：</label>
+                            <div class="input-group col-sm-4">
+                                <select class="form-control" name="typeid" required="" aria-required="true">
+                                    <option value="0">顶级权限</option>
+                                    {if !empty($auth)}
+                                    {foreach name="auth" item="vo"}
+                                    <option value="{$vo.id}">{$vo.node_name}</option>
+                                    {/foreach}
+                                    {/if}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">模块名：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="rolename" type="text" class="form-control" name="module_name" required="" aria-required="true">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">控制器名：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="rolename" type="text" class="form-control" name="control_name" required="" aria-required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">方法名：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="rolename" type="text" class="form-control" name="action_name" required="" aria-required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜单样式：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="rolename" type="text" class="form-control" name="style" aria-required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">类型：</label>
+                            <div class="input-group col-sm-4">
+                                {foreach name='authtype' item='vo' key='key'}
+                                <div class="radio i-checks col-sm-4">
+                                    <label>
+                                        <input type="radio" value="{$key}" {if condition="$key == 1 " }checked{/if} name="is_menu"> <i></i> {$vo}</label>
+                                </div>
+                                {/foreach}
+
                             </div>
                         </div>
 
@@ -46,6 +102,7 @@
                             <div class="col-sm-4 col-sm-offset-3">
                                 <!--<input type="button" value="提交" class="btn btn-primary" id="postform"/>-->
                                 <button class="btn btn-primary" type="submit">提交</button>
+                                &nbsp;&nbsp;
                                 <a href="{:url('auth/index')}" class="btn btn-primary">返回</a>
                             </div>
                         </div>
@@ -98,25 +155,27 @@
 
         return false;
     }
-
-    //表单验证
+    
+    //单选按钮特效
     $(document).ready(function(){
         $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
     });
-    $.validator.setDefaults({
-        highlight: function(e) {
-            $(e).closest(".form-group").removeClass("has-success").addClass("has-error")
-        },
-        success: function(e) {
-            e.closest(".form-group").removeClass("has-error").addClass("has-success")
-        },
-        errorElement: "span",
-        errorPlacement: function(e, r) {
-            e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
-        },
-        errorClass: "help-block m-b-none",
-        validClass: "help-block m-b-none"
-    });
+
+    //表单验证
+    // $.validator.setDefaults({
+    //     highlight: function(e) {
+    //         $(e).closest(".form-group").removeClass("has-success").addClass("has-error")
+    //     },
+    //     success: function(e) {
+    //         e.closest(".form-group").removeClass("has-error").addClass("has-success")
+    //     },
+    //     errorElement: "span",
+    //     errorPlacement: function(e, r) {
+    //         e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+    //     },
+    //     errorClass: "help-block m-b-none",
+    //     validClass: "help-block m-b-none"
+    // });
 </script>
 </body>
 </html>
